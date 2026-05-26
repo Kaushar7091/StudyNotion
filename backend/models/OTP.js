@@ -19,21 +19,20 @@ const OTPSchema = new mongoose.Schema({
 
 // Define a function to send emails
 async function sendVerificationEmail(email, otp) {
-	// Create a transporter to send emails
-
-	// Define the email options
-
-	// Send the email
 	try {
 		const mailResponse = await mailSender(
 			email,
 			"Verification Email",
 			emailTemplate(otp)
 		);
-		console.log("Email sent successfully: ", mailResponse.response);
+		if (mailResponse) {
+			console.log("Email sent successfully: ", mailResponse.response);
+		} else {
+			console.log("Email sending failed (mailResponse is undefined). Please check your SMTP environment variables.");
+		}
 	} catch (error) {
 		console.log("Error occurred while sending email: ", error);
-		throw error;
+		// Gracefully handle email sending errors without crashing the database transaction
 	}
 }
 
