@@ -25,14 +25,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: function (origin, callback) {
-			// Allow all origins dynamically to prevent any CORS block issues
-			callback(null, true);
-		},
+		origin: [process.env.FRONTEND_URL || "http://localhost:3000"],
 		credentials: true,
 	})
 )
-
 app.use(
 	fileUpload({
 		useTempFiles:true,
