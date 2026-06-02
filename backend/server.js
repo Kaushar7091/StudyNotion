@@ -23,9 +23,27 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+	process.env.FRONTEND_URL,
+	"http://localhost:3000",
+	"http://localhost:5173",
+].filter(Boolean).map(url => url.replace(/\/$/, ""));
+
 app.use(
 	cors({
-		origin: [process.env.FRONTEND_URL || "http://localhost:3000"],
+		origin: function (origin, callback) {
+			if (!origin) return callback(null, true);
+			const normalizedOrigin = origin.replace(/\/$/, "");
+			if (
+				allowedOrigins.indexOf(normalizedOrigin) !== -1 ||
+				normalizedOrigin.endsWith("vercel.app") ||
+				normalizedOrigin.includes("localhost") ||
+				normalizedOrigin.includes("127.0.0.1")
+			) {
+				return callback(null, true);
+			}
+			return callback(new Error('Not allowed by CORS'));
+		},
 		credentials: true,
 	})
 )
