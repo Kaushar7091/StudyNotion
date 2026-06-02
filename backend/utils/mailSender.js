@@ -3,6 +3,10 @@ const axios = require("axios");
 
 const mailSender = async (email, title, body) => {
     try {
+        console.log("DEBUG: BREVO_API_KEY exists in env:", !!process.env.BREVO_API_KEY);
+        console.log("DEBUG: MAIL_HOST exists in env:", !!process.env.MAIL_HOST);
+        console.log("DEBUG: MAIL_USER exists in env:", !!process.env.MAIL_USER);
+
         // If Brevo API Key is configured, use the HTTP API (works on Render Free tier)
         if (process.env.BREVO_API_KEY) {
             console.log("Sending email via Brevo HTTP API...");
