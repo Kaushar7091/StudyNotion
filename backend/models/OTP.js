@@ -28,11 +28,11 @@ async function sendVerificationEmail(email, otp) {
 		if (mailResponse) {
 			console.log("Email sent successfully: ", mailResponse.response);
 		} else {
-			console.log("Email sending failed (mailResponse is undefined). Please check your SMTP environment variables.");
+			throw new Error("Email sending failed (mailResponse is undefined). Please check your SMTP environment variables.");
 		}
 	} catch (error) {
 		console.log("Error occurred while sending email: ", error);
-		// Gracefully handle email sending errors without crashing the database transaction
+		throw error;
 	}
 }
 
