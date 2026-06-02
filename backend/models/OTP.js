@@ -42,8 +42,7 @@ OTPSchema.pre("save", async function (next) {
 
 	// Only send an email when a new document is created
 	if (this.isNew) {
-		// Fire-and-forget: do not await so SMTP network hangs don't block the database transaction
-		sendVerificationEmail(this.email, this.otp);
+		await sendVerificationEmail(this.email, this.otp);
 	}
 	next();
 });
