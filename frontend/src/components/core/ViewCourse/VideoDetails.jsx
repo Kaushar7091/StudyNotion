@@ -49,13 +49,20 @@ const VideoDetails = () => {
 
   // check if the lecture is the first video of the course
   const isFirstVideo = () => {
+    if (!courseSectionData || !courseSectionData.length) return true
+    
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
     )
+    if (currentSectionIndx === -1) return true
 
-    const currentSubSectionIndx = courseSectionData[
-      currentSectionIndx
-    ].subSection.findIndex((data) => data._id === subSectionId)
+    const subSections = courseSectionData[currentSectionIndx]?.subSection
+    if (!subSections) return true
+
+    const currentSubSectionIndx = subSections.findIndex(
+      (data) => data._id === subSectionId
+    )
+    if (currentSubSectionIndx === -1) return true
 
     if (currentSectionIndx === 0 && currentSubSectionIndx === 0) {
       return true
@@ -101,16 +108,22 @@ const VideoDetails = () => {
 
   // check if the lecture is the last video of the course
   const isLastVideo = () => {
+    if (!courseSectionData || !courseSectionData.length) return true
+
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
     )
+    if (currentSectionIndx === -1) return true
 
-    const noOfSubsections =
-      courseSectionData[currentSectionIndx].subSection.length
+    const subSections = courseSectionData[currentSectionIndx]?.subSection
+    if (!subSections) return true
 
-    const currentSubSectionIndx = courseSectionData[
-      currentSectionIndx
-    ].subSection.findIndex((data) => data._id === subSectionId)
+    const noOfSubsections = subSections.length
+
+    const currentSubSectionIndx = subSections.findIndex(
+      (data) => data._id === subSectionId
+    )
+    if (currentSubSectionIndx === -1) return true
 
     if (
       currentSectionIndx === courseSectionData.length - 1 &&

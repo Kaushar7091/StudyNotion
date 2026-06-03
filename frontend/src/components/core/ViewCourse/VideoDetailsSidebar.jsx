@@ -27,7 +27,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
       )
       const currentSubSectionIndx = courseSectionData?.[
         currentSectionIndx
-      ]?.subSection.findIndex((data) => data._id === subSectionId)
+      ]?.subSection?.findIndex((data) => data._id === subSectionId)
       const activeSubSectionId =
         courseSectionData[currentSectionIndx]?.subSection?.[
           currentSubSectionIndx
