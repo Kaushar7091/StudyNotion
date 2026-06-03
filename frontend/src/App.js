@@ -28,6 +28,7 @@ import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
 
@@ -161,7 +162,7 @@ function App() {
 
 
     </Routes>
-
+    <Analytics />
    </div>
   );
 }
