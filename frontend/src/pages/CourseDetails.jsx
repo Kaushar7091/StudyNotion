@@ -26,7 +26,8 @@ function CourseDetails() {
 
   // Getting courseId from url parameter
   const { courseId } = useParams()
-  // console.log(`course id: ${courseId}`)
+  const parsedCourseId = courseId.split("-").pop()
+  // console.log(`course id: ${parsedCourseId}`)
 
   // Declear a state to save the course details
   const [response, setResponse] = useState(null)
@@ -35,14 +36,14 @@ function CourseDetails() {
     // Calling fetchCourseDetails fucntion to fetch the details
     ;(async () => {
       try {
-        const res = await fetchCourseDetails(courseId)
+        const res = await fetchCourseDetails(parsedCourseId)
         // console.log("course details res: ", res)
         setResponse(res)
       } catch (error) {
         console.log("Could not fetch Course Details")
       }
     })()
-  }, [courseId])
+  }, [parsedCourseId])
 
   // console.log("response: ", response)
 
@@ -103,7 +104,7 @@ function CourseDetails() {
 
   const handleBuyCourse = () => {
     if (token) {
-      buyCourse(token, [courseId], user, navigate, dispatch)
+      buyCourse(token, [parsedCourseId], user, navigate, dispatch)
       return
     }
     setConfirmationModal({

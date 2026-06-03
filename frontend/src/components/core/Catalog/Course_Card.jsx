@@ -17,7 +17,7 @@ const Course_Card = ({course, Height}) => {
     
   return (
     <>
-      <Link to={`/courses/${course._id}`}>
+      <Link to={`/courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9\s]/g, "").split(" ").join("-")}-${course._id}`}>
         <div className="">
           <div className="rounded-lg">
             <img
