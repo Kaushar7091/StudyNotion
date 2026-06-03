@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
 
 import CountryCode from "../../data/countrycode.json"
 import { apiConnector } from "../../services/apiconnector"
@@ -11,11 +12,11 @@ const ContactUsForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm()
 
   const submitContactForm = async (data) => {
-    // console.log("Form Data - ", data)
+    const toastId = toast.loading("Sending your message...")
     try {
       setLoading(true)
       const res = await apiConnector(
@@ -23,25 +24,26 @@ const ContactUsForm = () => {
         contactusEndpoint.CONTACT_US_API,
         data
       )
-      // console.log("Email Res - ", res)
+      if (res.data.success) {
+        toast.success("Message sent successfully!")
+        reset({
+          email: "",
+          firstname: "",
+          lastname: "",
+          message: "",
+          phoneNo: "",
+        })
+      } else {
+        toast.error(res.data.message || "Failed to send message.")
+      }
       setLoading(false)
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
+      toast.error(error.response?.data?.message || "Could not send message. Please try again.")
       setLoading(false)
     }
+    toast.dismiss(toastId)
   }
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset({
-        email: "",
-        firstname: "",
-        lastname: "",
-        message: "",
-        phoneNo: "",
-      })
-    }
-  }, [reset, isSubmitSuccessful])
 
   return (
     <form
