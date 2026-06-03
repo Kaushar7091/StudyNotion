@@ -73,16 +73,22 @@ exports.categoryPageDetails = async (req, res) => {
       const categoriesExceptSelected = await Category.find({
         _id: { $ne: categoryId },
       })
+      .populate({
+        path: "courses",
+        match: { status: "Published" },
+      })
+      .exec()
+
+      // Prioritize categories that actually have published courses
+      const categoriesWithCourses = categoriesExceptSelected.filter(
+        (category) => category.courses && category.courses.length > 0
+      )
+
       let differentCategory = null
-      if (categoriesExceptSelected.length > 0) {
-        differentCategory = await Category.findOne(
-          categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]._id
-        )
-          .populate({
-            path: "courses",
-            match: { status: "Published" },
-          })
-          .exec()
+      if (categoriesWithCourses.length > 0) {
+        differentCategory = categoriesWithCourses[getRandomInt(categoriesWithCourses.length)]
+      } else if (categoriesExceptSelected.length > 0) {
+        differentCategory = categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
       }
         //console.log("Different COURSE", differentCategory)
       // Get top-selling courses across all categories

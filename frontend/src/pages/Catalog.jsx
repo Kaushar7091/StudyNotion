@@ -113,16 +113,18 @@ const Catalog = () => {
             </div>
           </div>
           {/* Section 2 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-            <div className="section_heading">
-              Top courses in {catalogPageData?.data?.differentCategory?.name}
+          {catalogPageData?.data?.differentCategory?.courses?.length > 0 && (
+            <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+              <div className="section_heading">
+                Top courses in {catalogPageData?.data?.differentCategory?.name}
+              </div>
+              <div className="py-8">
+                <CourseSlider
+                  Courses={catalogPageData?.data?.differentCategory?.courses}
+                />
+              </div>
             </div>
-            <div className="py-8">
-              <CourseSlider
-                Courses={catalogPageData?.data?.differentCategory?.courses}
-              />
-            </div>
-          </div>
+          )}
     
           {/* Section 3 */}
           <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
