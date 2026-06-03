@@ -1,5 +1,6 @@
 const buffer = require("buffer");
 if (!buffer.SlowBuffer) { buffer.SlowBuffer = buffer.Buffer; }
+const os = require("os");
 require('dotenv').config();
 const express = require("express");
 const app = express();
@@ -50,7 +51,7 @@ app.use(
 app.use(
 	fileUpload({
 		useTempFiles:true,
-		tempFileDir:"/tmp",
+		tempFileDir:os.tmpdir(),
 	})
 )
 //cloudinary connection
