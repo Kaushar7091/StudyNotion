@@ -3,6 +3,7 @@ import {Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
+import AIChatbot from "./components/common/AIChatbot";
 
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
@@ -163,6 +164,7 @@ function App() {
 
     </Routes>
     <Analytics />
+    <AIChatbot />
    </div>
   );
 }

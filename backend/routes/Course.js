@@ -1,6 +1,7 @@
 // Import the required modules
 const express = require("express")
 const router = express.Router()
+const { askAITutor } = require("../controllers/AI")
 
 // Import the Controllers
 
@@ -99,5 +100,7 @@ router.post("/getCategoryPageDetails", categoryPageDetails)
 router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
+
+router.post("/ask-tutor", auth, askAITutor)
 
 module.exports = router
